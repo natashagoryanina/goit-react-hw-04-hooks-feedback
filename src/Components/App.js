@@ -12,11 +12,11 @@ const initialState = {
 };
 
 const App = () => {
-    const [app, setApp] = useState(initialState);
+    const [feedback, setFeedback] = useState(initialState);
 
     const countFeedback = (e) => {
         const name = e.target.name;
-        setApp((prev) => {
+        setFeedback((prev) => {
             return {
                 ...prev,
                 [name]: prev[name] + 1,
@@ -25,7 +25,7 @@ const App = () => {
     };
 
     const countTotalFeedback = () => {
-        const {good, neutral, bad} = app;
+        const {good, neutral, bad} = feedback;
         let total = good + neutral + bad;
         return total;
     };
@@ -35,7 +35,7 @@ const App = () => {
         if (total === 0) {
             return 0;
         };
-        let positivePerc = app.good * 100 / total;
+        let positivePerc = feedback.good * 100 / total;
         return parseInt(positivePerc);
     };
 
@@ -43,13 +43,13 @@ const App = () => {
         <main>
             <GlobalStyles></GlobalStyles>
             <Section title="Please leave feedback">
-                <FeedbackOptions options={app} onLeaveFeedback={countFeedback}/>
+                <FeedbackOptions options={feedback} onLeaveFeedback={countFeedback}/>
             </Section>
             <Section title="Statistics">
                 {countTotalFeedback() === 0  ? (<Notification message="No feedback given"/>) :
                 (
-                    <Statistics good={app.good} neutral={app.neutral} 
-                    bad={app.bad} total={countTotalFeedback()} 
+                    <Statistics good={feedback.good} neutral={feedback.neutral} 
+                    bad={feedback.bad} total={countTotalFeedback()} 
                     positivePercentage={countPositiveFeedbackPercentage()}/>)}
 
             </Section>
